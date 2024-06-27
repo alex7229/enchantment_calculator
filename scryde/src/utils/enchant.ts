@@ -10,12 +10,19 @@ const armorChance = [
 type EnchantOptions = {
   isWeapon: boolean;
   desiredEnchant: number;
+  additionalChance: number;
   useBlessScrolls: boolean;
   agathionsUsage: number[];
 };
 
 const enchant = (options: EnchantOptions) => {
-  const { desiredEnchant, isWeapon, useBlessScrolls, agathionsUsage } = options;
+  const {
+    desiredEnchant,
+    isWeapon,
+    useBlessScrolls,
+    agathionsUsage,
+    additionalChance,
+  } = options;
   let results = {
     scrolls: 0,
     blessScrolls: 0,
@@ -45,6 +52,10 @@ const enchant = (options: EnchantOptions) => {
       const additionalChance = isWeapon
         ? AGATHION_WEAPON_CHANCE
         : AGATHION_ARMOR_CHANCE;
+      chance += additionalChance / 100;
+    }
+
+    if (additionalChance) {
       chance += additionalChance / 100;
     }
 

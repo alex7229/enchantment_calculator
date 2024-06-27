@@ -5,6 +5,7 @@ type SafeEnchantOptions = {
   isWeapon: boolean;
   desiredEnchant: number;
   agathionUsage: number[];
+  additionalChance: number;
 };
 
 const enchantSafely = (
@@ -25,6 +26,7 @@ const enchantSafely = (
       isWeapon: options.isWeapon,
       useBlessScrolls: true,
       agathionsUsage: options.agathionUsage,
+      additionalChance: options.additionalChance,
     });
     totalScrolls += result.scrolls;
     totalBlessScrolls += result.blessScrolls;

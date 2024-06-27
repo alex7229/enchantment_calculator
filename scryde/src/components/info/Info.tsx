@@ -8,6 +8,7 @@ export type ItemInfo = {
   enchant: number;
   isWeapon: boolean;
   agathionUsage: number[];
+  additionalChance: number;
 };
 
 type Props = {
@@ -16,10 +17,13 @@ type Props = {
 };
 
 const ItemInfoBlock: React.FC<Props> = (props) => {
-  const { enchant, isWeapon, price, agathionUsage } = props.info;
+  const { enchant, isWeapon, price, agathionUsage, additionalChance } =
+    props.info;
 
   const priceInput = price === 0 ? "" : (price / 10 ** 6).toString();
   const enchantInput = enchant === 0 ? "" : enchant.toString();
+  const additionalChanceInput =
+    additionalChance === 0 ? "" : additionalChance.toString();
 
   const onPriceChanged = (newPrice: string) => {
     let price = parseFloat(newPrice);
@@ -52,6 +56,18 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
       enchantValue = 0;
     }
     props.onInfoChanged({ ...props.info, enchant: enchantValue });
+  };
+
+  const onAdditionalChanceChanged = (chance: string) => {
+    let chanceValue = parseInt(chance, 10);
+    if (Number.isNaN(chanceValue)) {
+      chanceValue = 0;
+    } else if (chanceValue > 100) {
+      chanceValue = 100;
+    } else if (chanceValue < 0) {
+      chanceValue = 0;
+    }
+    props.onInfoChanged({ ...props.info, additionalChance: chanceValue });
   };
 
   const onWeaponCheckboxClicked = (checked: boolean) => {
@@ -90,6 +106,22 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
             />
           </div>
           <span className="value">{enchant}</span>
+        </div>
+      </p>
+      <p className="row">
+        <label> Extra chance:</label>
+        <div className="input-wrapper-outer">
+          <div className="input-wrapper-inner">
+            <input
+              type="number"
+              max="100"
+              min="0"
+              width="15"
+              value={additionalChanceInput}
+              onChange={(e) => onAdditionalChanceChanged(e.target.value)}
+            />
+          </div>
+          <span className="value">{additionalChance}</span>
         </div>
       </p>
       <p className="row">

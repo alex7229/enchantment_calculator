@@ -27,6 +27,7 @@ const defaultItemInfo: ItemInfo = {
   isWeapon: false,
   price: 200 * 10 ** 6,
   agathionUsage: [3],
+  additionalChance: 0,
 };
 
 function App() {
@@ -78,11 +79,13 @@ function App() {
       desiredEnchant: itemInfo.enchant,
       isWeapon: itemInfo.isWeapon,
       agathionUsage: itemInfo.agathionUsage,
+      additionalChance: itemInfo.additionalChance,
     });
     const safe = enchantSafely({
       desiredEnchant: itemInfo.enchant,
       isWeapon: itemInfo.isWeapon,
       agathionUsage: itemInfo.agathionUsage,
+      additionalChance: itemInfo.additionalChance,
     });
 
     setPreviousRegularResult(currentRegularResult);

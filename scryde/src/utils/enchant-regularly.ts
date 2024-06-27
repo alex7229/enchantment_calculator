@@ -5,6 +5,7 @@ type RegularEnchantOptions = {
   isWeapon: boolean;
   desiredEnchant: number;
   agathionUsage: number[];
+  additionalChance: number;
 };
 
 const enchantRegularly = (
@@ -24,6 +25,7 @@ const enchantRegularly = (
       isWeapon: options.isWeapon,
       useBlessScrolls: false,
       agathionsUsage: options.agathionUsage,
+      additionalChance: options.additionalChance,
     });
     totalScrolls += result.scrolls;
     totalUsedItems += result.usedItems;

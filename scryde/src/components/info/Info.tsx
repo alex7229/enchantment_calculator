@@ -1,10 +1,13 @@
 import formatPrice from "../../utils/formatPrice";
 import "./ItemInfo.css";
 
+const agathionLevels = [3, 4, 5, 6, 7, 8];
+
 export type ItemInfo = {
   price: number;
   enchant: number;
   isWeapon: boolean;
+  agathionUsage: number[];
 };
 
 type Props = {
@@ -13,7 +16,7 @@ type Props = {
 };
 
 const ItemInfoBlock: React.FC<Props> = (props) => {
-  const { enchant, isWeapon, price } = props.info;
+  const { enchant, isWeapon, price, agathionUsage } = props.info;
 
   const priceInput = price === 0 ? "" : (price / 10 ** 6).toString();
   const enchantInput = enchant === 0 ? "" : enchant.toString();
@@ -22,6 +25,21 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
     let price = parseFloat(newPrice);
     let actualPrice = Number.isNaN(price) ? 0 : price * 10 ** 6;
     props.onInfoChanged({ ...props.info, price: actualPrice });
+  };
+
+  const onAgathionLevelChecked = (level: number, checked: boolean) => {
+    const isIncluded = agathionUsage.includes(level);
+    if (isIncluded) {
+      props.onInfoChanged({
+        ...props.info,
+        agathionUsage: agathionUsage.filter((l) => l !== level),
+      });
+    } else {
+      props.onInfoChanged({
+        ...props.info,
+        agathionUsage: [...agathionUsage, level],
+      });
+    }
   };
 
   const onEnchangetChanged = (enchant: string) => {
@@ -81,6 +99,29 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
           onChange={(e) => onWeaponCheckboxClicked(e.target.checked)}
           type="checkbox"
         />
+      </p>
+      <p className="row">
+        <label>Agathions</label>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {agathionLevels.map((level) => (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <span>{level}</span>
+              <input
+                checked={agathionUsage.includes(level)}
+                onChange={(event) =>
+                  onAgathionLevelChecked(level, event.target.checked)
+                }
+                type="checkbox"
+              />
+            </div>
+          ))}
+        </div>
       </p>
     </div>
   );

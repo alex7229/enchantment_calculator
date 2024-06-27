@@ -26,6 +26,7 @@ const defaultItemInfo: ItemInfo = {
   enchant: 6,
   isWeapon: false,
   price: 200 * 10 ** 6,
+  agathionUsage: [3],
 };
 
 function App() {
@@ -76,10 +77,12 @@ function App() {
     const regular = enchantRegularly({
       desiredEnchant: itemInfo.enchant,
       isWeapon: itemInfo.isWeapon,
+      agathionUsage: itemInfo.agathionUsage,
     });
     const safe = enchantSafely({
       desiredEnchant: itemInfo.enchant,
       isWeapon: itemInfo.isWeapon,
+      agathionUsage: itemInfo.agathionUsage,
     });
 
     setPreviousRegularResult(currentRegularResult);

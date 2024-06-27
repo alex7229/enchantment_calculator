@@ -55,6 +55,12 @@ const ResultsBlock: React.FC<Props> = (props) => {
           <span>{currentResult?.itemsUsed ?? ""}</span>
         </p>
       ) : null}
+      {(currentResult?.agathionsUsed ?? 0) > 0 ? (
+        <p className="row">
+          <label>Agathions: </label>
+          <span>{currentResult?.agathionsUsed ?? ""}</span>
+        </p>
+      ) : null}
       {(currentResult?.moneyUsed ?? 0) > 0 ? (
         <p className="row">
           <label>Total spent: </label>

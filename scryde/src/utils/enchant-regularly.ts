@@ -4,6 +4,7 @@ import enchant from "./enchant";
 type RegularEnchantOptions = {
   isWeapon: boolean;
   desiredEnchant: number;
+  agathionUsage: number[];
 };
 
 const enchantRegularly = (
@@ -11,6 +12,7 @@ const enchantRegularly = (
 ): Omit<Result, "moneyUsed"> => {
   let totalScrolls = 0;
   let totalUsedItems = 0;
+  let totalAgathions = 0;
 
   let scrollsLimit = 250_000_000;
   let iterationCount = 0;
@@ -21,16 +23,19 @@ const enchantRegularly = (
       desiredEnchant: options.desiredEnchant,
       isWeapon: options.isWeapon,
       useBlessScrolls: false,
+      agathionsUsage: options.agathionUsage,
     });
     totalScrolls += result.scrolls;
     totalUsedItems += result.usedItems;
+    totalAgathions += result.agathionsUsed;
   }
 
   let averageScrolls = totalScrolls / iterationCount;
   let averageUsedItems = totalUsedItems / iterationCount;
+  let averageAgathions = totalAgathions / iterationCount;
 
   return {
-    agathionsUsed: 0,
+    agathionsUsed: Math.round(averageAgathions * 100) / 100,
     blessScrolls: 0,
     itemsUsed: Math.round(averageUsedItems * 100) / 100,
     regularScrolls: Math.round(averageScrolls * 100) / 100,

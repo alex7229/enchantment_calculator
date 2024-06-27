@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import SettingsBlock, {
   Settings,
@@ -8,6 +8,7 @@ import ResultsBlock, { Result } from "./components/results-block/ResultsBlock";
 import enchantRegularly from "./utils/enchant-regularly";
 import enchantSafely from "./utils/enchant-safely";
 import calculateTotalMoney from "./utils/calculate-total-money";
+import { STORAGE_SETTINGS_KEY, STORAGE_ITEM_INFO_KEY } from "./constants";
 
 const wait = (ms: number) =>
   new Promise((resolve) => {
@@ -33,11 +34,27 @@ function App() {
   const [regularResult, setRegularResult] = useState<Result | null>(null);
   const [safeResult, setSafeResult] = useState<Result | null>(null);
 
+  useEffect(() => {
+    try {
+      const settingsString = localStorage.getItem(STORAGE_SETTINGS_KEY);
+      const itemInfoString = localStorage.getItem(STORAGE_ITEM_INFO_KEY);
+      if (settingsString) {
+        setSettings(JSON.parse(settingsString));
+      }
+      if (itemInfoString) {
+        setItemInfo(JSON.parse(itemInfoString));
+      }
+    } catch {}
+  }, []);
+
   const calculate = async () => {
     if (itemInfo.enchant < 4) {
       alert("Enchant cannot be less than 4");
       return;
     }
+
+    localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(settings));
+    localStorage.setItem(STORAGE_ITEM_INFO_KEY, JSON.stringify(itemInfo));
 
     setProcessing(true);
     await wait(0);

@@ -4,11 +4,6 @@ import enchant from "./enchant";
 type SafeEnchantOptions = {
   isWeapon: boolean;
   desiredEnchant: number;
-  //   itemPrice: number;
-  //   weaponScrollPrice: number;
-  //   weaponBlessScrollPrice: number;
-  //   armorScrollPrice: number;
-  //   armorBlessScrollPrice: number;
 };
 
 const enchantSafely = (
@@ -34,22 +29,11 @@ const enchantSafely = (
   let averageScrolls = totalScrolls / iterationCount;
   let averageBlessScrolls = totalBlessScrolls / iterationCount;
 
-  //   let totalPrice = options.itemPrice;
-  //   let enchantRegularPrice = options.isWeapon
-  //     ? options.weaponScrollPrice
-  //     : options.armorScrollPrice;
-  //   let enchantBlessPrice = options.isWeapon
-  //     ? options.weaponBlessScrollPrice
-  //     : options.armorBlessScrollPrice;
-  //   totalPrice += averageScrolls * enchantRegularPrice;
-  //   totalPrice += averageBlessScrolls * enchantBlessPrice;
-
   return {
     agathionsUsed: 0,
     blessScrolls: Math.round(averageBlessScrolls * 100) / 100,
     itemsUsed: 1,
     regularScrolls: Math.round(averageScrolls * 100) / 100,
-    // moneyUsed: totalPrice,
   };
 };
 

@@ -47,6 +47,11 @@ function App() {
     } catch {}
   }, []);
 
+  const onSettingsChange = (newSettings: Settings) => {
+    setSettings(newSettings);
+    localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(newSettings));
+  };
+
   const calculate = async () => {
     if (itemInfo.enchant < 4) {
       alert("Enchant cannot be less than 4");
@@ -85,7 +90,10 @@ function App() {
       {processing ? <div className="loader"></div> : null}
       <div className="info-container">
         <div className="block">
-          <SettingsBlock settings={settings} onSettingsChange={setSettings} />
+          <SettingsBlock
+            settings={settings}
+            onSettingsChange={onSettingsChange}
+          />
         </div>
         <div className="block">
           <ItemInfoBlock info={itemInfo} onInfoChanged={setItemInfo} />

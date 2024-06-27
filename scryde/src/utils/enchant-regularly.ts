@@ -2,9 +2,6 @@ import { Result } from "../components/results-block/ResultsBlock";
 import enchant from "./enchant";
 
 type RegularEnchantOptions = {
-  //   itemPrice: number;
-  //   weaponScrollPrice: number;
-  //   armorScrollPrice: number;
   isWeapon: boolean;
   desiredEnchant: number;
 };
@@ -32,19 +29,11 @@ const enchantRegularly = (
   let averageScrolls = totalScrolls / iterationCount;
   let averageUsedItems = totalUsedItems / iterationCount;
 
-  //   let totalPrice = 0;
-  //   totalPrice += averageUsedItems * options.itemPrice;
-  //   let enchantPrice = options.isWeapon
-  //     ? options.weaponScrollPrice
-  //     : options.armorScrollPrice;
-  //   totalPrice += averageScrolls * enchantPrice;
-
   return {
     agathionsUsed: 0,
     blessScrolls: 0,
     itemsUsed: Math.round(averageUsedItems * 100) / 100,
     regularScrolls: Math.round(averageScrolls * 100) / 100,
-    // moneyUsed: totalPrice,
   };
 };
 

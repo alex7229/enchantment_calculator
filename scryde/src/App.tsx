@@ -20,6 +20,7 @@ const defaultSettings: Settings = {
   weaponBlessScrollPrice: 600 * 10 ** 6,
   armorRegularScrollPrice: 2 * 10 ** 6,
   weaponRegularScrollPrice: 18 * 10 ** 6,
+  goldPrice: 70 * 10 ** 6,
 };
 const defaultItemInfo: ItemInfo = {
   enchant: 6,

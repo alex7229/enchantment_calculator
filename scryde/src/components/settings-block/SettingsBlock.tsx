@@ -7,6 +7,7 @@ export type Settings = {
   weaponRegularScrollPrice: number;
   armorBlessScrollPrice: number;
   armorRegularScrollPrice: number;
+  goldPrice: number;
 };
 
 type Props = {
@@ -35,7 +36,11 @@ const SettingsBLock: React.FC<Props> = (props) => {
   }, [props.settings]);
 
   const setSingleSetting = (key: keyof Settings, value: string) => {
-    setCurrentSettings({ ...currentSettings, [key]: parseInt(value, 10) });
+    let newValue = parseInt(value, 10);
+    if (Number.isNaN(newValue)) {
+      newValue = 0;
+    }
+    setCurrentSettings({ ...currentSettings, [key]: newValue });
   };
 
   const saveSettings = () => {
@@ -59,7 +64,11 @@ const SettingsBLock: React.FC<Props> = (props) => {
         <span> Weapon bless scroll: </span>
         {isEditMode ? (
           <input
-            value={currentSettings.weaponBlessScrollPrice}
+            value={
+              currentSettings.weaponBlessScrollPrice
+                ? currentSettings.weaponBlessScrollPrice
+                : ""
+            }
             onChange={(event) =>
               setSingleSetting("weaponBlessScrollPrice", event.target.value)
             }
@@ -72,7 +81,11 @@ const SettingsBLock: React.FC<Props> = (props) => {
         <span> Weapon regular scroll: </span>
         {isEditMode ? (
           <input
-            value={currentSettings.weaponRegularScrollPrice}
+            value={
+              currentSettings.weaponRegularScrollPrice
+                ? currentSettings.weaponRegularScrollPrice
+                : ""
+            }
             onChange={(event) =>
               setSingleSetting("weaponRegularScrollPrice", event.target.value)
             }
@@ -85,7 +98,11 @@ const SettingsBLock: React.FC<Props> = (props) => {
         <span> Armor bless scroll: </span>
         {isEditMode ? (
           <input
-            value={currentSettings.armorBlessScrollPrice}
+            value={
+              currentSettings.armorBlessScrollPrice
+                ? currentSettings.armorBlessScrollPrice
+                : ""
+            }
             onChange={(event) =>
               setSingleSetting("armorBlessScrollPrice", event.target.value)
             }
@@ -98,7 +115,11 @@ const SettingsBLock: React.FC<Props> = (props) => {
         <span> Armor regular scroll: </span>
         {isEditMode ? (
           <input
-            value={currentSettings.armorRegularScrollPrice}
+            value={
+              currentSettings.armorRegularScrollPrice
+                ? currentSettings.armorRegularScrollPrice
+                : ""
+            }
             onChange={(event) =>
               setSingleSetting("armorRegularScrollPrice", event.target.value)
             }
@@ -107,6 +128,29 @@ const SettingsBLock: React.FC<Props> = (props) => {
           <span>{formatPrice(currentSettings.armorRegularScrollPrice)}</span>
         )}
       </p>
+      {isEditMode ? (
+        <p className="row">
+          <span>Gold price: </span>
+          <input
+            value={currentSettings.goldPrice ? currentSettings.goldPrice : ""}
+            onChange={(event) =>
+              setSingleSetting("goldPrice", event.target.value)
+            }
+          />
+        </p>
+      ) : null}
+      {!isEditMode ? (
+        <p className="row">
+          <span> Agathion weapon: </span>
+          <span>{formatPrice(currentSettings.goldPrice * 19)}</span>
+        </p>
+      ) : null}
+      {!isEditMode ? (
+        <p className="row">
+          <span> Agathion armor: </span>
+          <span>{formatPrice(currentSettings.goldPrice * 9)}</span>
+        </p>
+      ) : null}
       {isEditMode ? <button onClick={() => saveSettings()}>Save</button> : null}
     </div>
   );

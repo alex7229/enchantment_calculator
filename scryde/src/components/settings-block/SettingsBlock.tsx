@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import formatPrice from "../../utils/formatPrice";
 import "./SettingsBlock.css";
+import { AGATHION_ARMOR_GOLD, AGATHION_WEAPON_GOLD } from "../../constants";
 
 export type Settings = {
   weaponBlessScrollPrice: number;
@@ -142,13 +143,17 @@ const SettingsBLock: React.FC<Props> = (props) => {
       {!isEditMode ? (
         <p className="row">
           <span> Agathion weapon: </span>
-          <span>{formatPrice(currentSettings.goldPrice * 19)}</span>
+          <span>
+            {formatPrice(currentSettings.goldPrice * AGATHION_WEAPON_GOLD)}
+          </span>
         </p>
       ) : null}
       {!isEditMode ? (
         <p className="row">
           <span> Agathion armor: </span>
-          <span>{formatPrice(currentSettings.goldPrice * 9)}</span>
+          <span>
+            {formatPrice(currentSettings.goldPrice * AGATHION_ARMOR_GOLD)}
+          </span>
         </p>
       ) : null}
       {isEditMode ? <button onClick={() => saveSettings()}>Save</button> : null}

@@ -32,8 +32,16 @@ function App() {
   const [processing, setProcessing] = useState(false);
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [itemInfo, setItemInfo] = useState<ItemInfo>(defaultItemInfo);
-  const [regularResult, setRegularResult] = useState<Result | null>(null);
-  const [safeResult, setSafeResult] = useState<Result | null>(null);
+  const [previousRegularResult, setPreviousRegularResult] =
+    useState<Result | null>(null);
+  const [currentRegularResult, setCurrentRegularResult] =
+    useState<Result | null>(null);
+  const [previousSafeResult, setPreviousSafeResult] = useState<Result | null>(
+    null
+  );
+  const [currentSafeResult, setCurrentSafeResult] = useState<Result | null>(
+    null
+  );
 
   useEffect(() => {
     try {
@@ -74,11 +82,14 @@ function App() {
       isWeapon: itemInfo.isWeapon,
     });
 
-    setRegularResult({
+    setPreviousRegularResult(currentRegularResult);
+    setPreviousSafeResult(currentSafeResult);
+
+    setCurrentRegularResult({
       ...regular,
       moneyUsed: calculateTotalMoney(regular, settings, itemInfo),
     });
-    setSafeResult({
+    setCurrentSafeResult({
       ...safe,
       moneyUsed: calculateTotalMoney(safe, settings, itemInfo),
     });
@@ -100,10 +111,18 @@ function App() {
           <ItemInfoBlock info={itemInfo} onInfoChanged={setItemInfo} />
         </div>
         <div className="block">
-          <ResultsBlock result={regularResult} type="regular" />
+          <ResultsBlock
+            currentResult={currentRegularResult}
+            previousResult={previousRegularResult}
+            type="regular"
+          />
         </div>
         <div className="block">
-          <ResultsBlock result={safeResult} type="safe" />
+          <ResultsBlock
+            currentResult={currentSafeResult}
+            previousResult={previousSafeResult}
+            type="safe"
+          />
         </div>
       </div>
       <div className="button-container">

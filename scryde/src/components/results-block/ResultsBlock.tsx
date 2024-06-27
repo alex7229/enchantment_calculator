@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import formatPrice from "../../utils/formatPrice";
 import "./ResultsBlock.css";
 
@@ -10,37 +11,70 @@ export type Result = {
 };
 
 type Props = {
-  result: Result | null;
+  currentResult: Result | null;
+  previousResult: Result | null;
   type: "regular" | "safe";
 };
 
 const ResultsBlock: React.FC<Props> = (props) => {
-  const { result, type } = props;
+  const { currentResult, previousResult, type } = props;
+
+  const priceIncrease = useMemo(() => {
+    if (!currentResult?.moneyUsed || !previousResult?.moneyUsed) return null;
+
+    const differencePercents =
+      (currentResult.moneyUsed / previousResult.moneyUsed - 1) * 100;
+    const rounded = Math.round(differencePercents * 100) / 100;
+
+    return `${rounded > 0 ? "+" : ""}${rounded}%`;
+  }, [currentResult?.moneyUsed, previousResult?.moneyUsed]);
+
+  const positiveIncrease = useMemo(() => {
+    if (!priceIncrease) return false;
+    return /\+/.test(priceIncrease);
+  }, [priceIncrease]);
+
   return (
     <div style={{ width: 280 }}>
       <h3>Results ({type}):</h3>
-      {(result?.regularScrolls ?? 0) > 0 ? (
+      {(currentResult?.regularScrolls ?? 0) > 0 ? (
         <p className="row">
           <label>Scrolls: </label>
-          <span>{result?.regularScrolls ?? ""}</span>
+          <span>{currentResult?.regularScrolls ?? ""}</span>
         </p>
       ) : null}
-      {(result?.blessScrolls ?? 0) > 0 ? (
+      {(currentResult?.blessScrolls ?? 0) > 0 ? (
         <p className="row">
           <label>Bless Scrolls: </label>
-          <span>{result?.blessScrolls ?? ""}</span>
+          <span>{currentResult?.blessScrolls ?? ""}</span>
         </p>
       ) : null}
-      {(result?.itemsUsed ?? 0) > 0 ? (
+      {(currentResult?.itemsUsed ?? 0) > 0 ? (
         <p className="row">
           <label>Items: </label>
-          <span>{result?.itemsUsed ?? ""}</span>
+          <span>{currentResult?.itemsUsed ?? ""}</span>
         </p>
       ) : null}
-      {(result?.moneyUsed ?? 0) > 0 ? (
+      {(currentResult?.moneyUsed ?? 0) > 0 ? (
         <p className="row">
           <label>Total spent: </label>
-          <span>{result?.moneyUsed ? formatPrice(result.moneyUsed) : ""}</span>
+          <div>
+            <span>
+              {currentResult?.moneyUsed
+                ? formatPrice(currentResult.moneyUsed)
+                : ""}
+            </span>
+            {priceIncrease !== null ? (
+              <span
+                style={{
+                  marginLeft: 10,
+                  color: positiveIncrease ? "red" : "green",
+                }}
+              >
+                {priceIncrease}
+              </span>
+            ) : null}
+          </div>
         </p>
       ) : null}
     </div>

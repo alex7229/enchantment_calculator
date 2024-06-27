@@ -4,10 +4,13 @@ import SettingsBlock, {
   Settings,
 } from "./components/settings-block/SettingsBlock";
 import ItemInfoBlock, { ItemInfo } from "./components/info/Info";
-import ResultsBlock from "./components/results-block/ResultsBlock";
+import ResultsBlock, { Result } from "./components/results-block/ResultsBlock";
+import enchantRegularly from "./utils/enchant-regularly";
+import enchantSafely from "./utils/enchant-safely";
+import calculateTotalMoney from "./utils/calculate-total-money";
 
 const defaultSettings: Settings = {
-  armorBlessScrollPrice: 155 * 10 * 6,
+  armorBlessScrollPrice: 155 * 10 ** 6,
   weaponBlessScrollPrice: 600 * 10 ** 6,
   armorRegularScrollPrice: 2 * 10 ** 6,
   weaponRegularScrollPrice: 18 * 10 ** 6,
@@ -21,6 +24,33 @@ const defaultItemInfo: ItemInfo = {
 function App() {
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [itemInfo, setItemInfo] = useState<ItemInfo>(defaultItemInfo);
+  const [regularResult, setRegularResult] = useState<Result | null>(null);
+  const [safeResult, setSafeResult] = useState<Result | null>(null);
+
+  const calculate = () => {
+    if (itemInfo.enchant < 4) {
+      alert("Enchant cannot be less than 4");
+      return;
+    }
+
+    const regular = enchantRegularly({
+      desiredEnchant: itemInfo.enchant,
+      isWeapon: itemInfo.isWeapon,
+    });
+    const safe = enchantSafely({
+      desiredEnchant: itemInfo.enchant,
+      isWeapon: itemInfo.isWeapon,
+    });
+
+    setRegularResult({
+      ...regular,
+      moneyUsed: calculateTotalMoney(regular, settings, itemInfo),
+    });
+    setSafeResult({
+      ...safe,
+      moneyUsed: calculateTotalMoney(safe, settings, itemInfo),
+    });
+  };
 
   return (
     <div className="app">
@@ -32,32 +62,14 @@ function App() {
           <ItemInfoBlock info={itemInfo} onInfoChanged={setItemInfo} />
         </div>
         <div className="block">
-          <ResultsBlock
-            result={{
-              agathionsUsed: 0,
-              blessScrolls: 0,
-              itemsUsed: 2,
-              moneyUsed: 23 * 10 ** 8,
-              regularScrolls: 230,
-            }}
-            type="regular"
-          />
+          <ResultsBlock result={regularResult} type="regular" />
         </div>
         <div className="block">
-          <ResultsBlock
-            result={{
-              agathionsUsed: 0,
-              blessScrolls: 56,
-              itemsUsed: 1,
-              moneyUsed: 23 * 10 ** 8,
-              regularScrolls: 2303,
-            }}
-            type="safe"
-          />
+          <ResultsBlock result={safeResult} type="safe" />
         </div>
       </div>
       <div className="button-container">
-        <button id="calculate_button" type="button">
+        <button onClick={() => calculate()} type="button">
           Calculate
         </button>
       </div>

@@ -1,7 +1,7 @@
 import formatPrice from "../../utils/formatPrice";
 import "./ResultsBlock.css";
 
-type Result = {
+export type Result = {
   regularScrolls: number;
   blessScrolls: number;
   itemsUsed: number;

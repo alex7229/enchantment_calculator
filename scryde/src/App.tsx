@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Info from "./components/info/Info";
+import RegularResults from "./components/regular-results/RegularResults";
+import Settings from "./components/settings/Settings";
+import SafeResults from "./components/safe-results/SafeResults";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="info-container">
+        <div className="block">
+          <Settings />
+        </div>
+        <div className="block">
+          <Info />
+        </div>
+        <div className="block">
+          <RegularResults />
+        </div>
+        <div className="block">
+          <SafeResults />
+        </div>
+      </div>
+      <div className="button-container">
+        <button id="calculate_button" type="button">
+          Calculate
+        </button>
+      </div>
     </div>
   );
 }

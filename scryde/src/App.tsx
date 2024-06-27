@@ -1,11 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-import RegularResults from "./components/regular-results/RegularResults";
-import SafeResults from "./components/safe-results/SafeResults";
 import SettingsBlock, {
   Settings,
 } from "./components/settings-block/SettingsBlock";
 import ItemInfoBlock, { ItemInfo } from "./components/info/Info";
+import ResultsBlock from "./components/results-block/ResultsBlock";
 
 const defaultSettings: Settings = {
   armorBlessScrollPrice: 155 * 10 * 6,
@@ -33,10 +32,28 @@ function App() {
           <ItemInfoBlock info={itemInfo} onInfoChanged={setItemInfo} />
         </div>
         <div className="block">
-          <RegularResults />
+          <ResultsBlock
+            result={{
+              agathionsUsed: 0,
+              blessScrolls: 0,
+              itemsUsed: 2,
+              moneyUsed: 23 * 10 ** 8,
+              regularScrolls: 230,
+            }}
+            type="regular"
+          />
         </div>
         <div className="block">
-          <SafeResults />
+          <ResultsBlock
+            result={{
+              agathionsUsed: 0,
+              blessScrolls: 56,
+              itemsUsed: 1,
+              moneyUsed: 23 * 10 ** 8,
+              regularScrolls: 2303,
+            }}
+            type="safe"
+          />
         </div>
       </div>
       <div className="button-container">

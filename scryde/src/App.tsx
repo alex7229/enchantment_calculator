@@ -9,6 +9,11 @@ import enchantRegularly from "./utils/enchant-regularly";
 import enchantSafely from "./utils/enchant-safely";
 import calculateTotalMoney from "./utils/calculate-total-money";
 
+const wait = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(true), ms);
+  });
+
 const defaultSettings: Settings = {
   armorBlessScrollPrice: 155 * 10 ** 6,
   weaponBlessScrollPrice: 600 * 10 ** 6,
@@ -22,16 +27,20 @@ const defaultItemInfo: ItemInfo = {
 };
 
 function App() {
+  const [processing, setProcessing] = useState(false);
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [itemInfo, setItemInfo] = useState<ItemInfo>(defaultItemInfo);
   const [regularResult, setRegularResult] = useState<Result | null>(null);
   const [safeResult, setSafeResult] = useState<Result | null>(null);
 
-  const calculate = () => {
+  const calculate = async () => {
     if (itemInfo.enchant < 4) {
       alert("Enchant cannot be less than 4");
       return;
     }
+
+    setProcessing(true);
+    await wait(0);
 
     const regular = enchantRegularly({
       desiredEnchant: itemInfo.enchant,
@@ -50,10 +59,13 @@ function App() {
       ...safe,
       moneyUsed: calculateTotalMoney(safe, settings, itemInfo),
     });
+
+    setProcessing(false);
   };
 
   return (
     <div className="app">
+      {processing ? <div className="loader"></div> : null}
       <div className="info-container">
         <div className="block">
           <SettingsBlock settings={settings} onSettingsChange={setSettings} />

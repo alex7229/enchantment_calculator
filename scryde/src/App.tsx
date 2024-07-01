@@ -140,7 +140,7 @@ function App() {
         </div>
       </div>
       <div className="button-container">
-        <button onClick={() => calculate()} type="button">
+        <button className="calculate" onClick={() => calculate()} type="button">
           Calculate
         </button>
       </div>

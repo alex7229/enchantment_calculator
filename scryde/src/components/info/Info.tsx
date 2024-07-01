@@ -1,6 +1,7 @@
 import formatPrice from "../../utils/formatPrice";
 import "./ItemInfo.css";
 
+const allLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 const agathionLevels = [3, 4, 5, 6, 7, 8];
 const destructionLevels = [3, 4, 5, 6, 7, 8, 9];
 const ancientLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -82,23 +83,6 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
     }
   };
 
-  // const onAgathionLevelChecked = (level: number, checked: boolean) => {
-  //   const isIncluded = agathionUsage.includes(level);
-  //   if (isIncluded) {
-  //     props.onInfoChanged({
-  //       ...props.info,
-  //       agathionUsage: agathionUsage.filter((l) => l !== level),
-  //       destructionUsage: destructionUsage.filter((l) => l !== level),
-  //       // ancientUsage: des
-  //     });
-  //   } else {
-  //     props.onInfoChanged({
-  //       ...props.info,
-  //       agathionUsage: [...agathionUsage, level],
-  //     });
-  //   }
-  // };
-
   const onEnchantChanged = (enchant: string) => {
     let enchantValue = parseInt(enchant);
     if (Number.isNaN(enchantValue)) {
@@ -126,6 +110,10 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
   const onWeaponCheckboxClicked = (checked: boolean) => {
     props.onInfoChanged({ ...props.info, isWeapon: checked });
   };
+
+  const renderEmptyUsageBlock = (key: string) => (
+    <div key={key} style={{ height: 40, width: 20 }}></div>
+  );
 
   return (
     <>
@@ -188,67 +176,88 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
       <p className="row">
         <label>Agathions:</label>
         <div style={{ display: "flex", flexDirection: "row" }}>
-          {agathionLevels.map((level) => (
-            <div
-              key={"agathion" + level}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <span>{level}</span>
-              <input
-                checked={agathionUsage.includes(level)}
-                onChange={() => onUsageChanged(level, "agathionUsage")}
-                type="checkbox"
-              />
-            </div>
-          ))}
+          {allLevels.map((level) => {
+            let key = "agathion" + level;
+            if (agathionLevels.includes(level)) {
+              return (
+                <div
+                  key={key}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>{level}</span>
+                  <input
+                    checked={agathionUsage.includes(level)}
+                    onChange={() => onUsageChanged(level, "agathionUsage")}
+                    type="checkbox"
+                  />
+                </div>
+              );
+            } else {
+              return renderEmptyUsageBlock(key);
+            }
+          })}
         </div>
       </p>
       <p className="row">
-        <label>Destruction:</label>
+        <label>Destructions:</label>
         <div style={{ display: "flex", flexDirection: "row" }}>
-          {destructionLevels.map((level) => (
-            <div
-              key={"destruction" + level}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <span>{level}</span>
-              <input
-                checked={destructionUsage.includes(level)}
-                onChange={() => onUsageChanged(level, "destructionUsage")}
-                type="checkbox"
-              />
-            </div>
-          ))}
+          {allLevels.map((level) => {
+            let key = "destruction" + level;
+            if (destructionLevels.includes(level)) {
+              return (
+                <div
+                  key={key}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>{level}</span>
+                  <input
+                    checked={destructionUsage.includes(level)}
+                    onChange={() => onUsageChanged(level, "destructionUsage")}
+                    type="checkbox"
+                  />
+                </div>
+              );
+            } else {
+              return renderEmptyUsageBlock(key);
+            }
+          })}
         </div>
       </p>
       <p className="row">
         <label>Ancient:</label>
         <div style={{ display: "flex", flexDirection: "row" }}>
-          {ancientLevels.map((level) => (
-            <div
-              key={"ancient" + level}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <span>{level}</span>
-              <input
-                checked={ancientUsage.includes(level)}
-                onChange={() => onUsageChanged(level, "ancientUsage")}
-                type="checkbox"
-              />
-            </div>
-          ))}
+          {allLevels.map((level) => {
+            let key = "ancient" + level;
+            if (ancientLevels.includes(level)) {
+              return (
+                <div
+                  key={key}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>{level}</span>
+                  <input
+                    checked={ancientUsage.includes(level)}
+                    onChange={() => onUsageChanged(level, "ancientUsage")}
+                    type="checkbox"
+                  />
+                </div>
+              );
+            } else {
+              return renderEmptyUsageBlock(key);
+            }
+          })}
         </div>
       </p>
     </>

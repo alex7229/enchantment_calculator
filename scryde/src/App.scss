@@ -10,6 +10,13 @@
   border-left: 1px solid gray;
   box-sizing: border-box;
   width: 25%;
+  @media (max-width: 1300px) {
+    border-top: 1px solid gray;
+    width: 50%;
+  }
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .inner-block {
   width: 100%;

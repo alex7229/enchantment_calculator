@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./App.scss";
 import SettingsBlock, {
   Settings,
 } from "./components/settings-block/SettingsBlock";

@@ -108,27 +108,35 @@ function App() {
       {processing ? <div className="loader"></div> : null}
       <div className="info-container">
         <div className="block">
-          <SettingsBlock
-            settings={settings}
-            onSettingsChange={onSettingsChange}
-          />
+          <div className="inner-block">
+            <SettingsBlock
+              settings={settings}
+              onSettingsChange={onSettingsChange}
+            />
+          </div>
         </div>
         <div className="block">
-          <ItemInfoBlock info={itemInfo} onInfoChanged={setItemInfo} />
+          <div className="inner-block">
+            <ItemInfoBlock info={itemInfo} onInfoChanged={setItemInfo} />
+          </div>
         </div>
         <div className="block">
-          <ResultsBlock
-            currentResult={currentRegularResult}
-            previousResult={previousRegularResult}
-            type="regular"
-          />
+          <div className="inner-block">
+            <ResultsBlock
+              currentResult={currentRegularResult}
+              previousResult={previousRegularResult}
+              type="regular"
+            />
+          </div>
         </div>
         <div className="block">
-          <ResultsBlock
-            currentResult={currentSafeResult}
-            previousResult={previousSafeResult}
-            type="safe"
-          />
+          <div className="inner-block">
+            <ResultsBlock
+              currentResult={currentSafeResult}
+              previousResult={previousSafeResult}
+              type="safe"
+            />
+          </div>
         </div>
       </div>
       <div className="button-container">

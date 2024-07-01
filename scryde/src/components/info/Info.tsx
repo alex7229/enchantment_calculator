@@ -75,7 +75,7 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: 280 }}>
+    <>
       <h3>Item Info</h3>
       <p className="row">
         <label>Price (M):</label>
@@ -155,7 +155,7 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
           ))}
         </div>
       </p>
-    </div>
+    </>
   );
 };
 

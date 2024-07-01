@@ -3,10 +3,18 @@
   flex-direction: row;
   border-bottom: 1px solid gray;
   margin-bottom: 8px;
+  width: 100%;
+  flex-wrap: wrap;
 }
 .block {
   border-left: 1px solid gray;
+  box-sizing: border-box;
+  width: 25%;
+}
+.inner-block {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 .button-container {
   padding: 20px;

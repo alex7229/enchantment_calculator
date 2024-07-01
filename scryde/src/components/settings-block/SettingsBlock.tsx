@@ -56,7 +56,7 @@ const SettingsBLock: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <div style={{ width: 220 }}>
+    <>
       <div className="row">
         <h3>Prices:</h3>
         <button onClick={() => setIsEditMode(true)}>Edit</button>
@@ -157,7 +157,7 @@ const SettingsBLock: React.FC<Props> = (props) => {
         </p>
       ) : null}
       {isEditMode ? <button onClick={() => saveSettings()}>Save</button> : null}
-    </div>
+    </>
   );
 };
 

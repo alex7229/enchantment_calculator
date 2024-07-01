@@ -35,7 +35,7 @@ const ResultsBlock: React.FC<Props> = (props) => {
   }, [priceIncrease]);
 
   return (
-    <div style={{ width: 280 }}>
+    <>
       <h3>Results ({type}):</h3>
       {(currentResult?.regularScrolls ?? 0) > 0 ? (
         <p className="row">
@@ -83,7 +83,7 @@ const ResultsBlock: React.FC<Props> = (props) => {
           </div>
         </p>
       ) : null}
-    </div>
+    </>
   );
 };
 

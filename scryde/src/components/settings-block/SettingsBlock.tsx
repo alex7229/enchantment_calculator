@@ -8,6 +8,8 @@ export type Settings = {
   weaponRegularScrollPrice: number;
   armorBlessScrollPrice: number;
   armorRegularScrollPrice: number;
+  weaponDestructionScroll: number;
+  armorDestructionScroll: number;
   goldPrice: number;
 };
 
@@ -96,6 +98,23 @@ const SettingsBLock: React.FC<Props> = (props) => {
         )}
       </p>
       <p className="row">
+        <span> Weapon destruction scroll: </span>
+        {isEditMode ? (
+          <input
+            value={
+              currentSettings.weaponDestructionScroll
+                ? currentSettings.weaponDestructionScroll
+                : ""
+            }
+            onChange={(event) =>
+              setSingleSetting("weaponDestructionScroll", event.target.value)
+            }
+          />
+        ) : (
+          <span>{formatPrice(currentSettings.weaponDestructionScroll)}</span>
+        )}
+      </p>
+      <p className="row">
         <span> Armor bless scroll: </span>
         {isEditMode ? (
           <input
@@ -127,6 +146,23 @@ const SettingsBLock: React.FC<Props> = (props) => {
           />
         ) : (
           <span>{formatPrice(currentSettings.armorRegularScrollPrice)}</span>
+        )}
+      </p>
+      <p className="row">
+        <span> Armor destruction scroll: </span>
+        {isEditMode ? (
+          <input
+            value={
+              currentSettings.armorDestructionScroll
+                ? currentSettings.armorDestructionScroll
+                : ""
+            }
+            onChange={(event) =>
+              setSingleSetting("armorDestructionScroll", event.target.value)
+            }
+          />
+        ) : (
+          <span>{formatPrice(currentSettings.armorDestructionScroll)}</span>
         )}
       </p>
       {isEditMode ? (

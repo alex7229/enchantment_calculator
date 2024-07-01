@@ -16,6 +16,8 @@ const wait = (ms: number) =>
   });
 
 const defaultSettings: Settings = {
+  armorDestructionScroll: 7.5 * 10 ** 9,
+  weaponDestructionScroll: 175 * 10 ** 9,
   armorBlessScrollPrice: 155 * 10 ** 6,
   weaponBlessScrollPrice: 600 * 10 ** 6,
   armorRegularScrollPrice: 2 * 10 ** 6,

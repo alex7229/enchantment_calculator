@@ -17,6 +17,9 @@ const calculateTotalMoney = (
   const enchantBlessPrice = itemInfo.isWeapon
     ? settings.weaponBlessScrollPrice
     : settings.armorBlessScrollPrice;
+  const enchantDestructionPrice = itemInfo.isWeapon
+    ? settings.weaponDestructionScroll
+    : settings.armorDestructionScroll;
   const agathionPrice = itemInfo.isWeapon
     ? settings.goldPrice * AGATHION_WEAPON_GOLD
     : settings.goldPrice * AGATHION_ARMOR_GOLD;
@@ -24,6 +27,7 @@ const calculateTotalMoney = (
   total += result.regularScrolls * enchantRegularPrice;
   total += result.blessScrolls * enchantBlessPrice;
   total += result.agathionsUsed * agathionPrice;
+  total += result.destructionScrolls * enchantDestructionPrice;
 
   return total;
 };

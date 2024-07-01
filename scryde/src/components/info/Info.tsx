@@ -3,7 +3,8 @@ import "./ItemInfo.css";
 
 const allLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 const agathionLevels = [3, 4, 5, 6, 7, 8];
-const destructionLevels = [3, 4, 5, 6, 7, 8, 9];
+const destructionArmorLevels = [3, 4, 5, 6, 7, 8, 9];
+const destructionWeaponLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const ancientLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
 export type ItemInfo = {
@@ -108,6 +109,18 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
   };
 
   const onWeaponCheckboxClicked = (checked: boolean) => {
+    if (!checked) {
+      // changed from weapon to armor
+      // restrict destruction usage
+      props.onInfoChanged({
+        ...props.info,
+        isWeapon: checked,
+        destructionUsage: props.info.destructionUsage.filter((l) =>
+          destructionArmorLevels.includes(l)
+        ),
+      });
+      return;
+    }
     props.onInfoChanged({ ...props.info, isWeapon: checked });
   };
 
@@ -203,7 +216,10 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
         <div style={{ display: "flex", flexDirection: "row" }}>
           {allLevels.map((level) => {
             let key = "destruction" + level;
-            if (destructionLevels.includes(level)) {
+            const actualLevels = props.info.isWeapon
+              ? destructionWeaponLevels
+              : destructionArmorLevels;
+            if (actualLevels.includes(level)) {
               return (
                 <div
                   key={key}

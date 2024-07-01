@@ -26,7 +26,9 @@ const defaultItemInfo: ItemInfo = {
   enchant: 6,
   isWeapon: false,
   price: 200 * 10 ** 6,
-  agathionUsage: [3],
+  agathionUsage: [8],
+  destructionUsage: [9],
+  ancientUsage: [10],
   additionalChance: 0,
 };
 

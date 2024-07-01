@@ -10,6 +10,8 @@ export type ItemInfo = {
   enchant: number;
   isWeapon: boolean;
   agathionUsage: number[];
+  destructionUsage: number[];
+  ancientUsage: number[];
   additionalChance: number;
 };
 
@@ -19,8 +21,15 @@ type Props = {
 };
 
 const ItemInfoBlock: React.FC<Props> = (props) => {
-  const { enchant, isWeapon, price, agathionUsage, additionalChance } =
-    props.info;
+  const {
+    enchant,
+    isWeapon,
+    price,
+    agathionUsage,
+    additionalChance,
+    ancientUsage,
+    destructionUsage,
+  } = props.info;
 
   const priceInput = price === 0 ? "" : (price / 10 ** 6).toString();
   const enchantInput = enchant === 0 ? "" : enchant.toString();
@@ -33,22 +42,64 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
     props.onInfoChanged({ ...props.info, price: actualPrice });
   };
 
-  const onAgathionLevelChecked = (level: number, checked: boolean) => {
-    const isIncluded = agathionUsage.includes(level);
+  const onUsageChanged = (
+    level: number,
+    type: Extract<
+      keyof ItemInfo,
+      "agathionUsage" | "ancientUsage" | "destructionUsage"
+    >
+  ) => {
+    const allKeys: Array<typeof type> = [
+      "agathionUsage",
+      "ancientUsage",
+      "destructionUsage",
+    ];
+
+    let previousUsage = props.info[type];
+    const isIncluded = previousUsage.includes(level);
+
     if (isIncluded) {
+      // Remove current usage from this specific field
       props.onInfoChanged({
         ...props.info,
-        agathionUsage: agathionUsage.filter((l) => l !== level),
+        [type]: previousUsage.filter((l) => l !== level),
       });
     } else {
-      props.onInfoChanged({
-        ...props.info,
-        agathionUsage: [...agathionUsage, level],
+      // Add new usage to the specific fields
+      // Remove conflicting values with the same level from other fields
+      let newInfo = { ...props.info };
+      allKeys.forEach((k) => {
+        let newUsage: number[] = [];
+        const previousUsage = newInfo[k];
+        if (k === type) {
+          newUsage = [...previousUsage, level];
+        } else {
+          newUsage = previousUsage.filter((l) => l !== level);
+        }
+        newInfo[k] = newUsage;
       });
+      props.onInfoChanged(newInfo);
     }
   };
 
-  const onEnchangetChanged = (enchant: string) => {
+  // const onAgathionLevelChecked = (level: number, checked: boolean) => {
+  //   const isIncluded = agathionUsage.includes(level);
+  //   if (isIncluded) {
+  //     props.onInfoChanged({
+  //       ...props.info,
+  //       agathionUsage: agathionUsage.filter((l) => l !== level),
+  //       destructionUsage: destructionUsage.filter((l) => l !== level),
+  //       // ancientUsage: des
+  //     });
+  //   } else {
+  //     props.onInfoChanged({
+  //       ...props.info,
+  //       agathionUsage: [...agathionUsage, level],
+  //     });
+  //   }
+  // };
+
+  const onEnchantChanged = (enchant: string) => {
     let enchantValue = parseInt(enchant);
     if (Number.isNaN(enchantValue)) {
       enchantValue = 0;
@@ -104,7 +155,7 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
               width="15"
               id="desired_enchant_input"
               value={enchantInput}
-              onChange={(e) => onEnchangetChanged(e.target.value)}
+              onChange={(e) => onEnchantChanged(e.target.value)}
             />
           </div>
           <span className="value">{enchant}</span>
@@ -135,10 +186,11 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
         />
       </p>
       <p className="row">
-        <label>Agathions</label>
+        <label>Agathions:</label>
         <div style={{ display: "flex", flexDirection: "row" }}>
           {agathionLevels.map((level) => (
             <div
+              key={"agathion" + level}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -148,9 +200,51 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
               <span>{level}</span>
               <input
                 checked={agathionUsage.includes(level)}
-                onChange={(event) =>
-                  onAgathionLevelChecked(level, event.target.checked)
-                }
+                onChange={() => onUsageChanged(level, "agathionUsage")}
+                type="checkbox"
+              />
+            </div>
+          ))}
+        </div>
+      </p>
+      <p className="row">
+        <label>Destruction:</label>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {destructionLevels.map((level) => (
+            <div
+              key={"destruction" + level}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <span>{level}</span>
+              <input
+                checked={destructionUsage.includes(level)}
+                onChange={() => onUsageChanged(level, "destructionUsage")}
+                type="checkbox"
+              />
+            </div>
+          ))}
+        </div>
+      </p>
+      <p className="row">
+        <label>Ancient:</label>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {ancientLevels.map((level) => (
+            <div
+              key={"ancient" + level}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <span>{level}</span>
+              <input
+                checked={ancientUsage.includes(level)}
+                onChange={() => onUsageChanged(level, "ancientUsage")}
                 type="checkbox"
               />
             </div>

@@ -182,16 +182,12 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
               return (
                 <div
                   key={key}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  className="usage-wrapper"
+                  onClick={() => onUsageChanged(level, "agathionUsage")}
                 >
                   <span>{level}</span>
                   <input
                     checked={agathionUsage.includes(level)}
-                    onChange={() => onUsageChanged(level, "agathionUsage")}
                     type="checkbox"
                   />
                 </div>
@@ -211,16 +207,12 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
               return (
                 <div
                   key={key}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  className="usage-wrapper"
+                  onClick={() => onUsageChanged(level, "destructionUsage")}
                 >
                   <span>{level}</span>
                   <input
                     checked={destructionUsage.includes(level)}
-                    onChange={() => onUsageChanged(level, "destructionUsage")}
                     type="checkbox"
                   />
                 </div>
@@ -240,16 +232,12 @@ const ItemInfoBlock: React.FC<Props> = (props) => {
               return (
                 <div
                   key={key}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+                  className="usage-wrapper"
+                  onClick={() => onUsageChanged(level, "ancientUsage")}
                 >
                   <span>{level}</span>
                   <input
                     checked={ancientUsage.includes(level)}
-                    onChange={() => onUsageChanged(level, "ancientUsage")}
                     type="checkbox"
                   />
                 </div>

@@ -2,6 +2,8 @@ import formatPrice from "../../utils/formatPrice";
 import "./ItemInfo.css";
 
 const agathionLevels = [3, 4, 5, 6, 7, 8];
+const destructionLevels = [3, 4, 5, 6, 7, 8, 9];
+const ancientLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
 export type ItemInfo = {
   price: number;

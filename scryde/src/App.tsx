@@ -69,6 +69,16 @@ function App() {
       return;
     }
 
+    if (itemInfo.isWeapon && itemInfo.enchant >= 17) {
+      alert("Max enchant for weapons is 16");
+      return;
+    }
+
+    if (!itemInfo.isWeapon && itemInfo.enchant >= 15) {
+      alert("Max enchant for armor is 14");
+      return;
+    }
+
     localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify(settings));
     localStorage.setItem(STORAGE_ITEM_INFO_KEY, JSON.stringify(itemInfo));
 

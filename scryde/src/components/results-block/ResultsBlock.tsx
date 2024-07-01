@@ -5,6 +5,8 @@ import "./ResultsBlock.css";
 export type Result = {
   regularScrolls: number;
   blessScrolls: number;
+  ancientScrolls: number;
+  destructionScrolls: number;
   itemsUsed: number;
   agathionsUsed: number;
   moneyUsed: number;
@@ -59,6 +61,18 @@ const ResultsBlock: React.FC<Props> = (props) => {
         <p className="row">
           <label>Agathions: </label>
           <span>{currentResult?.agathionsUsed ?? ""}</span>
+        </p>
+      ) : null}
+      {(currentResult?.ancientScrolls ?? 0) > 0 ? (
+        <p className="row">
+          <label>Ancient scrolls: </label>
+          <span>{currentResult?.ancientScrolls ?? ""}</span>
+        </p>
+      ) : null}
+      {(currentResult?.destructionScrolls ?? 0) > 0 ? (
+        <p className="row">
+          <label>Destruction scrolls: </label>
+          <span>{currentResult?.destructionScrolls ?? ""}</span>
         </p>
       ) : null}
       {(currentResult?.moneyUsed ?? 0) > 0 ? (

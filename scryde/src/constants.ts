@@ -6,3 +6,4 @@ export const AGATHION_ARMOR_GOLD = 9;
 
 export const AGATHION_WEAPON_CHANCE = 10;
 export const AGATHION_ARMOR_CHANCE = 15;
+export const ANCIENT_BONUS_CHANCE = 10;

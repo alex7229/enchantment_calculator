@@ -1,4 +1,8 @@
-import { AGATHION_ARMOR_CHANCE, AGATHION_WEAPON_CHANCE } from "./../constants";
+import {
+  AGATHION_ARMOR_CHANCE,
+  AGATHION_WEAPON_CHANCE,
+  ANCIENT_BONUS_CHANCE,
+} from "./../constants";
 
 const weaponChance = [
   //1,  2,   3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15, 16
@@ -15,6 +19,8 @@ type EnchantOptions = {
   additionalChance: number;
   useBlessScrolls: boolean;
   agathionsUsage: number[];
+  destructionUsage: number[];
+  ancientUsage: number[];
 };
 
 const enchant = (options: EnchantOptions) => {
@@ -24,10 +30,14 @@ const enchant = (options: EnchantOptions) => {
     useBlessScrolls,
     agathionsUsage,
     additionalChance,
+    ancientUsage,
+    destructionUsage,
   } = options;
   let results = {
     scrolls: 0,
     blessScrolls: 0,
+    ancientScrolls: 0,
+    destructionScrolls: 0,
     currentEnchant: 0,
     usedItems: 1,
     agathionsUsed: 0,
@@ -43,7 +53,9 @@ const enchant = (options: EnchantOptions) => {
       continue;
     }
 
-    let isAgathionUsed = agathionsUsage.includes(results.currentEnchant);
+    const isAgathionUsed = agathionsUsage.includes(results.currentEnchant);
+    const isAncientUsed = ancientUsage.includes(results.currentEnchant);
+    const isDestructionUsed = destructionUsage.includes(results.currentEnchant);
 
     let roll = Math.random();
     let chance = isWeapon
@@ -55,6 +67,8 @@ const enchant = (options: EnchantOptions) => {
         ? AGATHION_WEAPON_CHANCE
         : AGATHION_ARMOR_CHANCE;
       chance += additionalChance / 100;
+    } else if (isAncientUsed) {
+      chance += ANCIENT_BONUS_CHANCE / 100;
     }
 
     if (additionalChance) {
@@ -71,6 +85,24 @@ const enchant = (options: EnchantOptions) => {
       } else {
         results.currentEnchant = 0;
         results.usedItems++;
+      }
+      continue;
+    }
+
+    if (isAncientUsed) {
+      results.ancientScrolls++;
+      if (success) {
+        results.currentEnchant++;
+      } else {
+        results.currentEnchant = 0;
+      }
+      continue;
+    }
+
+    if (isDestructionUsed) {
+      results.destructionScrolls++;
+      if (success) {
+        results.currentEnchant++;
       }
       continue;
     }

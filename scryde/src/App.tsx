@@ -91,12 +91,16 @@ function App() {
       desiredEnchant: itemInfo.enchant,
       isWeapon: itemInfo.isWeapon,
       agathionUsage: itemInfo.agathionUsage,
+      destructionUsage: itemInfo.destructionUsage,
+      ancientUsage: itemInfo.ancientUsage,
       additionalChance: itemInfo.additionalChance,
     });
     const safe = enchantSafely({
       desiredEnchant: itemInfo.enchant,
       isWeapon: itemInfo.isWeapon,
       agathionUsage: itemInfo.agathionUsage,
+      destructionUsage: itemInfo.destructionUsage,
+      ancientUsage: itemInfo.ancientUsage,
       additionalChance: itemInfo.additionalChance,
     });
 

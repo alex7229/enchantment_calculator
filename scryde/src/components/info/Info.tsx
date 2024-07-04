@@ -1,4 +1,5 @@
 import formatPrice from "../../utils/formatPrice";
+import * as z from "zod";
 import "./ItemInfo.css";
 
 const allLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -7,15 +8,19 @@ const destructionArmorLevels = [3, 4, 5, 6, 7, 8, 9];
 const destructionWeaponLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const ancientLevels = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
-export type ItemInfo = {
-  price: number;
-  enchant: number;
-  isWeapon: boolean;
-  agathionUsage: number[];
-  destructionUsage: number[];
-  ancientUsage: number[];
-  additionalChance: number;
-};
+export const itemInfoSchema = z
+  .object({
+    price: z.number(),
+    enchant: z.number(),
+    isWeapon: z.boolean(),
+    agathionUsage: z.array(z.number()),
+    destructionUsage: z.array(z.number()),
+    ancientUsage: z.array(z.number()),
+    additionalChance: z.number(),
+  })
+  .strict();
+
+export type ItemInfo = ReturnType<typeof itemInfoSchema.parse>;
 
 type Props = {
   info: ItemInfo;

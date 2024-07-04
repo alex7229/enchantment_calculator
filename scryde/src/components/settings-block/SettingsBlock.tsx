@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import formatPrice from "../../utils/formatPrice";
 import "./SettingsBlock.css";
 import { AGATHION_ARMOR_GOLD, AGATHION_WEAPON_GOLD } from "../../constants";
+import * as z from "zod";
 
-export type Settings = {
-  weaponBlessScrollPrice: number;
-  weaponRegularScrollPrice: number;
-  armorBlessScrollPrice: number;
-  armorRegularScrollPrice: number;
-  weaponDestructionScroll: number;
-  armorDestructionScroll: number;
-  goldPrice: number;
-};
+export const settingsSchema = z.object({
+  weaponBlessScrollPrice: z.number(),
+  weaponRegularScrollPrice: z.number(),
+  armorBlessScrollPrice: z.number(),
+  armorRegularScrollPrice: z.number(),
+  weaponDestructionScroll: z.number(),
+  armorDestructionScroll: z.number(),
+  goldPrice: z.number(),
+});
+
+export type Settings = ReturnType<typeof settingsSchema.parse>;
 
 type Props = {
   settings: Settings;

@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import "./App.scss";
 import SettingsBlock, {
   Settings,
+  settingsSchema,
 } from "./components/settings-block/SettingsBlock";
-import ItemInfoBlock, { ItemInfo } from "./components/info/Info";
+import ItemInfoBlock, {
+  ItemInfo,
+  itemInfoSchema,
+} from "./components/info/Info";
 import ResultsBlock, { Result } from "./components/results-block/ResultsBlock";
 import enchantRegularly from "./utils/enchant-regularly";
 import enchantSafely from "./utils/enchant-safely";
@@ -54,10 +58,12 @@ function App() {
       const settingsString = localStorage.getItem(STORAGE_SETTINGS_KEY);
       const itemInfoString = localStorage.getItem(STORAGE_ITEM_INFO_KEY);
       if (settingsString) {
-        setSettings(JSON.parse(settingsString));
+        const parsedSettings = settingsSchema.parse(JSON.parse(settingsString));
+        setSettings(parsedSettings);
       }
       if (itemInfoString) {
-        setItemInfo(JSON.parse(itemInfoString));
+        const parsedInfo = itemInfoSchema.parse(JSON.parse(itemInfoString));
+        setItemInfo(parsedInfo);
       }
     } catch {}
   }, []);
